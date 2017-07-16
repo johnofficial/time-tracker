@@ -37,7 +37,7 @@ $colors: (
   primary:    #488aff,
   secondary:  #32db64,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  light:      #f5f5f5,
   dark:       #222
 );
 
@@ -86,3 +86,6 @@ $colors: (
 
 @import "roboto";
 @import "noto-sans";
+
+
+$toolbar-ios-title-font-size: 2rem;

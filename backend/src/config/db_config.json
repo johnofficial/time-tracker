@@ -1,0 +1,10 @@
+{
+    "8802": {
+        "db_host": "localhost",
+        "db_name": "tracker",
+        "db_password": "123",
+        "db_port": "3306",
+        "db_type": "mysql",
+        "db_user": "veljko"
+    }
+}
