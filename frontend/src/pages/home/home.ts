@@ -22,6 +22,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
   private requests: RequestsProvider, private eventService: EventsProvider) {
     this.events = [];
+    localStorage.setItem('authToken', 's00000noIzQ0GQcaled3h947ijEAhqNNKlktipy4YxWpDLewuOHVeL7lF1952dST');
     this.setEvents()
   }
 
