@@ -22,7 +22,6 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
   private requests: RequestsProvider, private eventService: EventsProvider) {
     this.events = [];
-    localStorage.setItem('authToken', 's00000gbKWs5hFiEcJk8mU81HI6aj0NRXuDwYVk2fuqd3Q67cAJB1XSsHmUrT69B');
     this.setEvents()
   }
 
@@ -76,9 +75,39 @@ export class HomePage {
     prompt.present();
   }
 
-  deleteEvent(i) {
-    console.log('delete')
-    this.events.splice(i, 1);
+  fuck(e) {
+    [].length
+    let prompt = this.alertCtrl.create({
+      title: 'Event name',
+      message: "Please enter a name of created event",
+      inputs: [
+        {
+          name: 'action',
+          type: 'radio',
+          label: 'Delete',
+          value: 'delete'
+        },
+        {
+          name: 'action',
+          placeholder: 'Event name',
+          type: 'radio',
+          label: 'Edit',
+          value: 'edit'
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel'
+        },
+        {
+          text: 'Ok',
+          handler: action => {
+            console.log(action)
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
 }

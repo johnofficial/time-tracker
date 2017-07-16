@@ -11,11 +11,10 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class RequestsProvider {
 
-  private API_URL = 'http://localhost:8802/api';
+  private API_URL = 'http://138.68.76.20:8808/api';
 
   private get_auth_header() {
     let token = localStorage.getItem('authToken');
-    // let token ='s00000gbKWs5hFiEcJk8mU81HI6aj0NRXuDwYVk2fuqd3Q67cAJB1XSsHmUrT69B';
     let header = new Headers({Authorization: token});
     return new RequestOptions({headers: header})
   }
@@ -40,6 +39,15 @@ export class RequestsProvider {
 
   switchEvent(id_event) {
     return this.http.put(this.API_URL + '/switch/' + id_event, {}).map(res => res.json())
+  }
+
+  loginUser(username, password) {
+    return this.http.post('http://138.68.76.20:8808/user/login', {
+      username:username,
+      password: password,
+      data: {}
+    }).map(res => res.json())
+
   }
 
 }

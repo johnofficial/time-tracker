@@ -19,6 +19,7 @@
 
   <h1 *ngIf="!eventService.activeEvent.active" style="text-align: center"><span>You spent a </span>{{period}}<span> time on </span>{{eventService.activeEvent.name}}</h1>
   <div *ngIf="eventService.activeEvent.active" class="img-wrap">
+
     <img src="https://s-media-cache-ak0.pinimg.com/originals/72/66/03/7266036c9f3383d21730484150602f01.gif" alt="">
     <h1>{{hours}} : {{minutes}} : {{seconds}}</h1>
   </div>

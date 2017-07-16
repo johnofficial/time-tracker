@@ -36,7 +36,7 @@
     <button (click)="showPrompt()" ion-fab mini><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 
-  <ion-card (click)="goTo(event)" *ngFor="let event of events; let i = index">
+  <ion-card (press)="fuck($event)" (click)="goTo(event)" *ngFor="let event of events; let i = index">
     <ion-card-header>
       {{event.name}}
     </ion-card-header>
