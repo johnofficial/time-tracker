@@ -22,6 +22,7 @@ export class HomePage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
   private requests: RequestsProvider, private eventService: EventsProvider) {
     this.events = [];
+    localStorage.setItem('authToken', 's00000noIzQ0GQcaled3h947ijEAhqNNKlktipy4YxWpDLewuOHVeL7lF1952dST');
     this.setEvents()
   }
 
@@ -39,6 +40,7 @@ export class HomePage {
 
   setEvents() {
     this.requests.getEvents().subscribe(res => {
+      console.log(res);
       this.events = res.events
     })
   }
@@ -76,7 +78,6 @@ export class HomePage {
   }
 
   fuck(e) {
-    [].length
     let prompt = this.alertCtrl.create({
       title: 'Event name',
       message: "Please enter a name of created event",
