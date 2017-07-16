@@ -11,12 +11,15 @@ import {HttpModule} from "@angular/http";
 import {FormsModule} from "@angular/forms";
 import {EventPage} from "../pages/event/event";
 import { EventsProvider } from '../providers/events/events';
+import {LoginPage} from "../pages/login/login";
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    EventPage
+    EventPage,
+      LoginPage
   ],
   imports: [
     BrowserModule,
@@ -28,14 +31,16 @@ import { EventsProvider } from '../providers/events/events';
   entryComponents: [
     MyApp,
     HomePage,
-    EventPage
+    EventPage,
+      LoginPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RequestsProvider,
-    EventsProvider
+    EventsProvider,
+    AuthServiceProvider
   ]
 })
 export class AppModule {}

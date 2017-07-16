@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {RequestsProvider} from "../../providers/requests/requests";
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {HomePage} from "../home/home";
 
 /**
  * Generated class for the LoginPage page.
@@ -18,17 +20,20 @@ export class LoginPage {
   username: string;
   password: string;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private requests: RequestsProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private requests: RequestsProvider,
+  private authService: AuthServiceProvider) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+
   }
 
   loginUser() {
     this.requests.loginUser(this.username, this.password).subscribe(res => {
-      localStorage.setItem('authToken', res.token)
+      localStorage.setItem('authToken', res.token);
+      this.authService.loggedIn();
+      this.navCtrl.setRoot(HomePage);
     })
   }
-
 }
+

@@ -3,6 +3,8 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import {RequestsProvider} from "../../providers/requests/requests";
 import {EventPage} from "../event/event";
 import {EventsProvider} from "../../providers/events/events";
+import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
+import {LoginPage} from "../login/login";
 
 /**
  * Generated class for the HomePage page.
@@ -20,10 +22,8 @@ export class HomePage {
   events: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-  private requests: RequestsProvider, private eventService: EventsProvider) {
+  private requests: RequestsProvider, private eventService: EventsProvider, private authService: AuthServiceProvider) {
     this.events = [];
-    localStorage.setItem('authToken', 's00000noIzQ0GQcaled3h947ijEAhqNNKlktipy4YxWpDLewuOHVeL7lF1952dST');
-    this.setEvents()
   }
 
   goTo(event) {
@@ -32,10 +32,28 @@ export class HomePage {
   }
 
   ionViewDidLoad() {
+
   }
 
-  ionViewDidEnter() {
-    this.setEvents();
+  ionViewWillEnter() {
+    if (this.ionViewCanEnter() == '_false') {
+      this.navCtrl.setRoot(LoginPage);
+      return;
+    }
+    this.setEvents()
+  }
+
+  ionViewCanEnter() {
+    if (this.authService.isLoggedUser()) {
+      return true
+    }
+    else {
+      return '_false'
+    }
+  }
+
+  loginRedirect() {
+    this.navCtrl.setRoot(LoginPage);
   }
 
   setEvents() {

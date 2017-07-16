@@ -33,7 +33,6 @@ export class RequestsProvider {
   }
 
   getPeriod(id_event) {
-    console.log(id_event)
     return this.http.get(this.API_URL + '/event-period/' + id_event, this.get_auth_header()).map(res => res.json())
   }
 
@@ -43,7 +42,7 @@ export class RequestsProvider {
 
   loginUser(username, password) {
     return this.http.post('http://138.68.76.20:8808/user/login', {
-      username:username,
+      username: username,
       password: password,
       data: {}
     }).map(res => res.json())
