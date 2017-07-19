@@ -11,14 +11,7 @@ import datetime
 import decimal
 import json
 
-def toJson(e):
-    _jsonobj = {
-    "id": e.id,
-    "name": e.name,
-    "created": str(e.created),
-    "active": e.active
-    }
-    return _jsonobj
+
 
 
 def get_timedelta(task):
@@ -73,7 +66,7 @@ class Switch(Base):
                 if not task.end_time:
                     if stop_task(task):
                         _period = get_period(event)
-                        return self.ok({"action": "stopped", "event": toJson(event), "period": _period})
+                        return self.ok({"action": "stopped", "event": event.toJson(), "period": _period})
                     else:
                         return self.error('error stoping event')
 
@@ -88,7 +81,7 @@ class Switch(Base):
         try:
             event.tasks.append(task)
             session.commit()
-            return self.ok({'action': 'started', "event": toJson(event)})
+            return self.ok({'action': 'started', "event": event.toJson()})
         except Exception as e:
             return self.error('{}'.format(e))
 
@@ -112,7 +105,7 @@ class ManageEvent(Base):
             self.auth_user.user.events.append(event)
             session.commit()
             return self.ok({'added': event.id, 
-                'events': [toJson(event) for event in session.query(Event).order_by(Event.created.desc()).all()]})
+                'events': [event.toJson() for event in session.query(Event).order_by(Event.created.desc()).all()]})
         except Exception as e:
             return self.error('{}'.format(e))
 
@@ -156,6 +149,27 @@ class EventPeriod(Base):
             'event': event.name,
             'period': str(_total)
         })
+
+@api(
+    URI='/test'
+)
+class TestingClass(Base):
+
+    def get(self):
+
+        # from src.models.user import EventTask
+        EventTask, _ = base.common.orm.get_orm_model('event_tasks')
+
+        tasks = _.query(EventTask).all()
+
+        task = tasks[0]
+
+        res = []
+        for task in tasks:
+            res.append(task.toJson())
+
+        for task in res:
+            print(task)
 
 
 

@@ -2,6 +2,7 @@ import datetime
 from sqlalchemy import Column, String, Integer, ForeignKey, Boolean, DateTime, Text, CHAR, DATETIME, TIME
 from sqlalchemy.orm import relationship
 import base.common.orm
+import json
 
 
 class AuthUser(base.common.orm.sql_base):
@@ -61,6 +62,14 @@ class Event(base.common.orm.sql_base):
         self.name = name
         self.created = created
         self.active = active
+        
+    def toJson(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "created": str(self.created),
+            "active": self.active
+        }
 
 class EventTask(base.common.orm.sql_base):
 
@@ -77,6 +86,14 @@ class EventTask(base.common.orm.sql_base):
         self.start_time = start_time
         self.end_time = end_time
         self.period = period
+
+    def toJson(self):
+        return json.dumps({
+            "id": self.id,
+            "start": str(self.start_time),
+            "end": str(self.end_time),
+            "period": str(self.period)
+        })
 
 def main():
     pass

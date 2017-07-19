@@ -2,16 +2,11 @@ import { Injectable } from '@angular/core';
 import {Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
 
-/*
-  Generated class for the RequestsProvider provider.
-
-  See https://angular.io/docs/ts/latest/guide/dependency-injection.html
-  for more info on providers and Angular DI.
-*/
 @Injectable()
 export class RequestsProvider {
 
   private API_URL = 'http://138.68.76.20:8808/api';
+  // private API_URL = 'http://localhost:8802/api';
 
   private get_auth_header() {
     let token = localStorage.getItem('authToken');
