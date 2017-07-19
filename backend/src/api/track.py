@@ -31,9 +31,11 @@ def get_period(event):
 
     return str(_total)
 
+def get_all_events_list():
+    Event, session = base.common.orm.get_orm_model('events')
+    return [event.toJson() for event in session.query(Event).order_by(Event.created.desc()).all()]
 
 
-# @authenticated()  # if every http method has to be authenticated
 @api(
     URI='/switch/:id_event'
 )
@@ -95,17 +97,19 @@ class ManageEvent(Base):
     @params(
         {'name': 'event_name', 'type': str, 'doc': 'Name for new event'}
     )
-    def post(self, name):
+    def post(self, event_name):
         Event, session = base.common.orm.get_orm_model('events')
 
+        if event_name == '':
+            return self.error("event couldn't be created without name")
+
         _id = sequencer().new('e')
-        event = Event(_id, name, datetime.datetime.now())
+        event = Event(_id, event_name, datetime.datetime.now())
 
         try:
             self.auth_user.user.events.append(event)
             session.commit()
-            return self.ok({'added': event.id, 
-                'events': [event.toJson() for event in session.query(Event).order_by(Event.created.desc()).all()]})
+            return self.ok({'added': event.id, 'events': get_all_events_list()})
         except Exception as e:
             return self.error('{}'.format(e))
 
@@ -122,6 +126,25 @@ class ManageEvent(Base):
             })
 
         return self.ok({'events': sorted(_events, key=lambda ev: ev['created'], reverse=True)})
+
+    @params(
+        {'name': 'id_event', 'type': str, 'doc': 'ID of event to be deleted'}
+    )
+    def delete(self, id_event):
+        Event, session = base.common.orm.get_orm_model('events')
+
+        event = session.query(Event).filter(Event.id == id_event).one_or_none()
+
+        for task in event.tasks:
+            session.delete(task)
+
+        try:
+            session.delete(event)
+            return self.ok({'deleted': event.name, 'events': get_all_events_list()})
+        except Exception as e:
+            session.rollback()
+            print(e)
+            return self.error('error delete event')
 
 @api(
     URI='/event-period/:id_event'

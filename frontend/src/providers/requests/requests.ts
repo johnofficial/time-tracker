@@ -35,6 +35,10 @@ export class RequestsProvider {
     return this.http.put(this.API_URL + '/switch/' + id_event, {}).map(res => res.json())
   }
 
+  deleteEvent(id_event) {
+    return this.http.delete(this.API_URL + '/events?id_event=' + id_event).map(res => res.json())
+  }
+
   loginUser(username, password) {
     return this.http.post('http://138.68.76.20:8808/user/login', {
       username: username,
@@ -43,5 +47,7 @@ export class RequestsProvider {
     }).map(res => res.json())
 
   }
+
+
 
 }

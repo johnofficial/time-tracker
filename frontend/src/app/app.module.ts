@@ -13,13 +13,20 @@ import {EventPage} from "../pages/event/event";
 import { EventsProvider } from '../providers/events/events';
 import {LoginPage} from "../pages/login/login";
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
+import { NFC, Ndef } from '@ionic-native/nfc';
+import {NfcPage} from "../pages/nfc/nfc";
+import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
+import { LoadingHandlerProvider } from '../providers/loading-handler/loading-handler';
+import { PromptsProvider } from '../providers/prompt-handler/prompts';
+
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     EventPage,
-      LoginPage
+      LoginPage,
+      NfcPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +39,8 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     MyApp,
     HomePage,
     EventPage,
-      LoginPage
+      LoginPage,
+      NfcPage
   ],
   providers: [
     StatusBar,
@@ -40,7 +48,13 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     RequestsProvider,
     EventsProvider,
-    AuthServiceProvider
+    AuthServiceProvider,
+      NFC,
+      Ndef,
+    ErrorHandlerProvider,
+    LoadingHandlerProvider,
+    PromptsProvider
+
   ]
 })
 export class AppModule {}

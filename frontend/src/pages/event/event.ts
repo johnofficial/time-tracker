@@ -26,11 +26,16 @@ export class EventPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventsProvider,
   private requests: RequestsProvider) {
+
     this.requests.getPeriod(this.eventService.activeEvent.id).subscribe(res => {
       console.log(res);
       this.period = res.period;
       this.setCount();
     });
+
+    if (this.eventService.switchActiveEvent) {
+      this.eventSwitch()
+    }
 
     if (this.eventService.activeEvent.active){
 
@@ -47,7 +52,8 @@ export class EventPage {
   }
 
   ngOnDestroy() {
-      clearInterval(this.interval);
+    this.eventService.activeEvent = null;
+    clearInterval(this.interval);
   }
 
   raiseCount() {

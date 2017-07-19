@@ -2,7 +2,7 @@
 
 app_name = 'tracker'
 app_description = 'base application'
-port = 8802
+port = 8808
 app_prefix = 'api'
 app_version = '0.0.1'
 models = [

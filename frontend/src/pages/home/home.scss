@@ -2,6 +2,9 @@ page-home {
 
 }
 
+$spinner-width: 50px;
+
+
 .toolbar-background {
   background-color: rgba(52, 73, 94,1.0);
 }
@@ -22,6 +25,9 @@ h3 {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.stop-time {
+  background: #00ff9b;
 }
 .start-time ion-icon{
   font-size: 32px;
@@ -57,4 +63,18 @@ h3 {
   padding-left: 10px;
   font-size: 14px;
   color: #C7C7C7;
+}
+
+
+.spinner svg {
+  width: $spinner-width;
+  height: $spinner-width;
+  fill: #488aff;
+}
+.loader-wrapper {
+ width: $spinner-width;
+  margin: auto;
+}
+.spinner-md-crescent circle {
+  stroke: #488aff;
 }

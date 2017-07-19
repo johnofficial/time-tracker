@@ -6,11 +6,13 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {LoginPage} from "../pages/login/login";
 import {AuthServiceProvider} from "../providers/auth-service/auth-service";
 import {HomePage} from "../pages/home/home";
+import {NfcPage} from "../pages/nfc/nfc";
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   rootPage:any = this.getRootPage();
+  //rootPage:any = NfcPage;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private authService: AuthServiceProvider) {
     platform.ready().then(() => {

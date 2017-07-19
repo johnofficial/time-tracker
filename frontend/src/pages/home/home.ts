@@ -5,6 +5,9 @@ import {EventPage} from "../event/event";
 import {EventsProvider} from "../../providers/events/events";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {LoginPage} from "../login/login";
+import {NfcPage} from "../nfc/nfc";
+import {LoadingHandlerProvider} from "../../providers/loading-handler/loading-handler";
+import {PromptsProvider} from "../../providers/prompt-handler/prompts";
 
 /**
  * Generated class for the HomePage page.
@@ -21,12 +24,15 @@ export class HomePage {
 
   events: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController,
-  private requests: RequestsProvider, private eventService: EventsProvider, private authService: AuthServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private requests: RequestsProvider,
+              private eventService: EventsProvider, private authService: AuthServiceProvider,
+              private alertCtrl: AlertController, public loadingHangler: LoadingHandlerProvider,
+              public alertHandler: PromptsProvider) {
+
     this.events = [];
   }
 
-  goTo(event) {
+  goToEvent(event) {
     this.eventService.activeEvent = event;
     this.navCtrl.push(EventPage);
   }
@@ -57,76 +63,58 @@ export class HomePage {
   }
 
   setEvents() {
+    this.loadingHangler.startLoading();
     this.requests.getEvents().subscribe(res => {
       console.log(res);
-      this.events = res.events
+      this.events = res.events;
+      this.loadingHangler.stopLoading();
     })
   }
 
-  addEvent(data) {
-    this.events.push(
-      {name: data.name, created: 'now'});
-  }
+  createEvent() {
+    let prompt = this.alertHandler.getCreateEventPrompt();
 
-  showPrompt() {
-    let prompt = this.alertCtrl.create({
-      title: 'Event name',
-      message: "Please enter a name of created event",
-      inputs: [
-        {
-          name: 'name',
-          placeholder: 'Event name'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Create',
-          handler: data => {
-            this.requests.addEvent(data.name).subscribe(res => {
-              this.events = res.events;
-            });
-          }
-        }
-      ]
-    });
+    let confirmButton = {
+      text: 'OK',
+      handler: data => {
+        this.requests.addEvent(data.name).subscribe(res => {
+          this.events = res.events;
+        })
+      }
+    };
+    prompt.addButton(confirmButton);
     prompt.present();
   }
 
-  fuck(e) {
-    let prompt = this.alertCtrl.create({
-      title: 'Event name',
-      message: "Please enter a name of created event",
-      inputs: [
-        {
-          name: 'action',
-          type: 'radio',
-          label: 'Delete',
-          value: 'delete'
-        },
-        {
-          name: 'action',
-          placeholder: 'Event name',
-          type: 'radio',
-          label: 'Edit',
-          value: 'edit'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel'
-        },
-        {
-          text: 'Ok',
-          handler: action => {
-            console.log(action)
-          }
+  editEvent(event) {
+    let prompt = this.alertHandler.getEditEventPrompt();
+
+    let confirmButton = {
+      text: 'OK',
+      handler: action => {
+        if (action == 'edit') {
+          console.log('edited: ' + event.name)
         }
-      ]
-    });
-    prompt.present();
+        if (action == 'delete') {
+          this.requests.deleteEvent(event.id)
+              .subscribe(res => {
+                this.events = res.events;
+              })
+        }
+      }
+    };
+    prompt.addButton(confirmButton);
+    prompt.present()
   }
+
+  log(event, x) {
+    console.log(x)
+  }
+
+
+
+
+
+
 
 }
