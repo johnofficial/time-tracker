@@ -1,17 +1,43 @@
+<ion-content>
+  <section class="logo-section">
+      <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="527 92 140 89.196">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: #274f72;
+              font-size: 32px;
+              font-family: Roboto-Light, Roboto;
+              font-weight: 300;
+            }
 
-<ion-header>
+            .cls-2 {
+              fill: url(#linear-gradient);
+            }
+          </style>
+          <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+            <stop offset="0" stop-color="#39f96c"/>
+            <stop offset="1" stop-color="#1d587d"/>
+          </linearGradient>
+        </defs>
+        <g id="Group_9" data-name="Group 9" transform="translate(437 -28.804)">
+          <text id="time_track" data-name="time track" class="cls-1" transform="translate(160 202)"><tspan x="-69.922" y="0">time track</tspan></text>
+          <path id="Path_1" data-name="Path 1" class="cls-2" d="M40.5,50.829c22.091,0,40-32.42,40-10.329a40,40,0,0,1-80,0C.5,18.409,18.409,50.829,40.5,50.829Z" transform="translate(119.5 88.012)"/>
+        </g>
+      </svg>
 
-  <ion-navbar>
-    <ion-title>login</ion-title>
-  </ion-navbar>
+  </section>
 
-</ion-header>
+  <div class="grad-bgc">
+    <section class="form-wrap">
+    <div class="form-tab"><h1>Sign In</h1></div>
 
-
-<ion-content padding>
-
-  <input [(ngModel)]="username" type="text" placeholder="username">
-  <input [(ngModel)]="password" type="password" placeholder="password">
-  <button (click)="loginUser()" ion-button>Login</button>
+    <div class="form-cont">
+      <input [(ngModel)]="username" type="text" placeholder="username">
+      <input [(ngModel)]="password" type="password" placeholder="password">
+      <button (click)="loginUser()" ion-button>Sign In</button>
+    </div>
+  </section>
+  </div>
 
 </ion-content>
+
