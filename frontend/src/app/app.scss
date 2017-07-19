@@ -14,3 +14,21 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.fab{
+  background: white;
+  color: black;
+}
+.toolbar-title{
+  text-align: center;
+}
+.col{
+  padding: 0;
+}
+.card{
+  background: #F9f9f9;
+  margin-bottom: 20px;
+}
+.cont-wrap{
+  margin-top: 30px;
+}

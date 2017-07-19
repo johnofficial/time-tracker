@@ -14,6 +14,7 @@ export class AuthServiceProvider {
   private isLoggedIn: boolean;
 
   constructor(public http: Http) {
+    localStorage.removeItem('authTokem');
     if (localStorage.getItem('authToken')) {
       this.isLoggedIn = true;
     }

@@ -25,7 +25,7 @@
       </svg>
 
     </div>
-    <button ion-button menuToggle><ion-icon color="light" name="reorder"></ion-icon></button>
+    <button ion-button menuToggle><ion-icon color="primary" name="reorder"></ion-icon></button>
   </ion-navbar>
 
   <section class="title-toolbar grad">
@@ -51,25 +51,25 @@
 
 
   <ion-fab top center edge>
-    <button (click)="showPrompt()" ion-fab mini><ion-icon name="add"></ion-icon></button>
+    <button (click)="showPrompt()" class="white" ion-fab><ion-icon name="add"></ion-icon></button>
   </ion-fab>
-
+  <section class="cont-wrap">
   <ion-card (press)="fuck($event)" (click)="goTo(event)" *ngFor="let event of events; let i = index">
     <ion-row>
-      <ion-col col-8>
+      <ion-col col-9>
     <ion-card-header>
       {{event.name}}
     </ion-card-header>
     <ion-card-content>
-      {{event.created}}
+      123:11        <!--TODO: Implement a total time-->
     </ion-card-content>
       </ion-col>
-      <ion-col col-4>
+      <ion-col col-3>
         <div class="start-time"><ion-icon name="play" color="light"></ion-icon></div>
       </ion-col>
     </ion-row>
   </ion-card>
-
+</section>
   <h3 style="margin-top: 50%" *ngIf="!events.length > 0">Click on + to add new category</h3>
 
 </ion-content>
