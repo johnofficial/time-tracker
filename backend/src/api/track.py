@@ -11,13 +11,6 @@ import datetime
 import decimal
 import json
 
-
-
-
-def get_timedelta(task):
-    return datetime.timedelta(hours=task.period.hour, minutes=task.period.minute, seconds=task.period.second)
-
-
 def get_period(event):
 
     _total = datetime.timedelta(hours=0, minutes=0, seconds=0)
@@ -27,9 +20,10 @@ def get_period(event):
             _total += datetime.datetime.now() - task.start_time
             continue
 
-        _total += get_timedelta(task)
+        _total += task.timedelta()
 
     return str(_total)
+
 
 def get_all_events_list():
     Event, session = base.common.orm.get_orm_model('events')
@@ -57,6 +51,7 @@ class Switch(Base):
                 session.commit()
                 return True
             except Exception as e:
+                session.rollback()
                 return False
 
         event = session.query(Event).filter(Event.id == id_event).one_or_none()
@@ -85,6 +80,7 @@ class Switch(Base):
             session.commit()
             return self.ok({'action': 'started', "event": event.toJson()})
         except Exception as e:
+            session.rollback()
             return self.error('{}'.format(e))
 
 
@@ -111,6 +107,7 @@ class ManageEvent(Base):
             session.commit()
             return self.ok({'added': event.id, 'events': get_all_events_list()})
         except Exception as e:
+            session.rollback()
             return self.error('{}'.format(e))
 
     @authenticated()
@@ -187,12 +184,9 @@ class TestingClass(Base):
 
         task = tasks[0]
 
-        res = []
-        for task in tasks:
-            res.append(task.toJson())
-
-        for task in res:
-            print(task)
+        if task.period:
+            for task in tasks:
+                print(type(task.timedelta()))
 
 
 

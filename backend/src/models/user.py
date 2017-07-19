@@ -95,6 +95,10 @@ class EventTask(base.common.orm.sql_base):
             "period": str(self.period)
         })
 
+    def timedelta(self):
+        return datetime.timedelta(hours=self.period.hour, minutes=self.period.minute, seconds=self.period.second)
+
+
 def main():
     pass
 

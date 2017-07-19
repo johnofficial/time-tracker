@@ -53,6 +53,7 @@ export class EventPage {
 
   ngOnDestroy() {
     this.eventService.activeEvent = null;
+    this.eventService.switchActiveEvent = false;
     clearInterval(this.interval);
   }
 
