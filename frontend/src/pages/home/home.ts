@@ -5,7 +5,6 @@ import {EventPage} from "../event/event";
 import {EventsProvider} from "../../providers/events/events";
 import {AuthServiceProvider} from "../../providers/auth-service/auth-service";
 import {LoginPage} from "../login/login";
-import {NfcPage} from "../nfc/nfc";
 import {LoadingHandlerProvider} from "../../providers/loading-handler/loading-handler";
 import {PromptsProvider} from "../../providers/prompt-handler/prompts";
 

@@ -13,8 +13,6 @@ import {EventPage} from "../pages/event/event";
 import { EventsProvider } from '../providers/events/events';
 import {LoginPage} from "../pages/login/login";
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
-import { NFC, Ndef } from '@ionic-native/nfc';
-import {NfcPage} from "../pages/nfc/nfc";
 import { ErrorHandlerProvider } from '../providers/error-handler/error-handler';
 import { LoadingHandlerProvider } from '../providers/loading-handler/loading-handler';
 import { PromptsProvider } from '../providers/prompt-handler/prompts';
@@ -25,8 +23,7 @@ import { PromptsProvider } from '../providers/prompt-handler/prompts';
     MyApp,
     HomePage,
     EventPage,
-      LoginPage,
-      NfcPage
+      LoginPage
   ],
   imports: [
     BrowserModule,
@@ -39,8 +36,7 @@ import { PromptsProvider } from '../providers/prompt-handler/prompts';
     MyApp,
     HomePage,
     EventPage,
-      LoginPage,
-      NfcPage
+      LoginPage
   ],
   providers: [
     StatusBar,
@@ -49,8 +45,6 @@ import { PromptsProvider } from '../providers/prompt-handler/prompts';
     RequestsProvider,
     EventsProvider,
     AuthServiceProvider,
-      NFC,
-      Ndef,
     ErrorHandlerProvider,
     LoadingHandlerProvider,
     PromptsProvider
