@@ -80,7 +80,7 @@ def check_password_is_valid(password):
 def pre_register_user(username, password, data):
     lname = data['name'].strip().split(' ')
     data['first_name'] = str(lname[0])
-    data['last_name'] = str(lname[1:])
+    data['last_name'] = str(' '.join(lname[1:]))
 
     return True
 

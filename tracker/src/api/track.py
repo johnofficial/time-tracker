@@ -222,8 +222,7 @@ class TestingClass(Base):
         # from src.models.user import EventTask
         EventTask, _ = base.common.orm.get_orm_model('event_tasks')
 
-        b = self.get_cookie('test')
-        print(b)
+        print(self.get_user_locale())
 
         return self.ok()
 
