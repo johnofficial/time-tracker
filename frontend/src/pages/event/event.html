@@ -46,15 +46,16 @@
     <button (click)="eventSwitch()" *ngIf="eventService.activeEvent.active" class="white" ion-fab><ion-icon name="pause"></ion-icon></button>
   </ion-fab>
 
-  <div class="current-time">
-    <h2 play >{{period}}</h2>
+  <div *ngIf="eventService.activeEvent.active" class="current-time">
+    <h2 [ngClass]="{'play': eventService.activeEvent.active,
+                    'pause': !eventService.activeEvent.active}">{{hours}} : {{minutes}} : {{seconds}}</h2>
   </div>
 
-  <ul>
+  <ul *ngIf="!eventService.activeEvent.active">
     <li><strong>Today</strong><p>04:29:31</p></li>
-    <li><strong>Last Week</strong><p>21:51:12</p></li>
-    <li><strong>Last Month</strong><p>82:19:10</p></li>
-    <li><strong>Total</strong><p>132:21:30</p></li>
+    <li><strong>Last Week</strong><p>{{periods.week_period}}</p></li>
+    <li><strong>Last Month</strong><p>{{periods.month_period}}</p></li>
+    <li><strong>Total</strong><p>{{periods.total_period}}</p></li>
   </ul>
 
 </ion-content>

@@ -16,23 +16,31 @@ import {RequestsProvider} from "../../providers/requests/requests";
 })
 export class EventPage {
 
-  hours: number;
-  minutes: number;
-  seconds: number;
+  hours: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
 
   interval:any;
   event: any;
 
-  period: string;
+  periods = {
+    week_period: '',
+    month_period: '',
+    total_period: '',
+    active_period: ''
+  };
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public eventService: EventsProvider,
   private requests: RequestsProvider) {
 
     this.requests.getPeriod(this.eventService.activeEvent.id).subscribe(res => {
       console.log(res);
-      this.period = res.period;
+      this.periods = res.periods;
+      if (this.eventService.activeEvent.active) {
+        this.setCount()
+      }
       this.event = res.event;
-      this.setCount();
     });
 
     if (this.eventService.switchActiveEvent) {
@@ -40,7 +48,6 @@ export class EventPage {
     }
 
     if (this.eventService.activeEvent.active){
-
       this.interval = setInterval(
         () => {
           console.log('works');
@@ -78,15 +85,15 @@ export class EventPage {
   }
 
   setCount() {
-
-    this.hours = parseInt(this.period.substring(0, this.period.search(':')));
-    let _restStr = this.period.substring(this.period.search(':') + 1, this.period.length);
+    console.log(this.periods.total_period);
+    this.hours = parseInt(this.periods.active_period.substring(0, this.periods.active_period.search(':')));
+    let _restStr = this.periods.active_period.substring(
+        this.periods.active_period.search(':') + 1, this.periods.active_period.length);
 
     this.minutes = parseInt(_restStr.substring(0, _restStr.search(':')));
     _restStr = _restStr.substring(_restStr.search(':') + 1, _restStr.length);
 
     this.seconds = parseInt(_restStr)
-
   }
 
   eventSwitch() {
@@ -95,7 +102,6 @@ export class EventPage {
       this.eventService.activeEvent = res.event;
 
       if (res.action == 'started') {
-        this.setCount();
         this.interval = setInterval(
           () => {
             console.log('works');
@@ -104,7 +110,7 @@ export class EventPage {
       }
 
       if (res.action == 'stopped') {
-        this.period = res.period;
+        this.periods = res.periods;
         clearInterval(this.interval);
       }
     })

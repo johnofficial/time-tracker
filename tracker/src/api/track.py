@@ -17,12 +17,21 @@ def get_total_period(event):
     for task in event.tasks:
 
         if not task.period:
-            _total += datetime.datetime.now() - task.start_time
+            # _total += datetime.datetime.now() - task.start_time
             continue
 
         _total += task.timedelta()
 
     return _total
+
+def get_active_period(event):
+
+    _active_period = None
+    for task in event.tasks:
+        if not task.period:
+            _active_period = datetime.datetime.now() - task.start_time
+
+    return _active_period
 
 
 def get_all_events_list():
@@ -96,16 +105,18 @@ class Switch(Base):
                         _lw_period = get_weekly_stats(event)
                         return self.ok({"action": "stopped",
                                         "event": event.toJson(),
-                                        "period": str(_period),
-                                        'last_month_period': str(_lm_period),
-                                        'last_week_period': str(_lw_period)
+                                        'periods': {
+                                            'total_period': str(_period),
+                                            'month_period': str(_lm_period),
+                                            'week_period': str(_lw_period)
+                                        }
                                         })
                     else:
                         return self.error('error stoping event')
 
         event.active = True
         _id = sequencer().new('t')
-        start_time = datetime.datetime  .now()
+        start_time = datetime.datetime.now()
         end_time = None
         period = None
 
@@ -201,15 +212,19 @@ class EventPeriod(Base):
         if not event:
             return self.error('no event')
 
+        _active_period = get_active_period(event)
         _total = get_total_period(event)
         _lm_period = get_monthly_stats(event)
         _lw_period = get_weekly_stats(event)
 
         return self.ok({
             'event': event.name,
-            'period': str(_total),
-            'last_month_period': str(_lm_period),
-            'last_week_period': str(_lw_period)
+            'periods': {
+                'total_period': str(_total),
+                'month_period': str(_lm_period),
+                'week_period': str(_lw_period),
+                'active_period': str(_active_period)
+            }
         })
 
 @api(

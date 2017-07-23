@@ -22,6 +22,7 @@ import {PromptsProvider} from "../../providers/prompt-handler/prompts";
 export class HomePage {
 
   events: any;
+  showCreateModal: boolean= false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private requests: RequestsProvider,
               private eventService: EventsProvider, private authService: AuthServiceProvider,
@@ -70,19 +71,12 @@ export class HomePage {
     })
   }
 
-  createEvent() {
-    let prompt = this.alertHandler.getCreateEventPrompt();
-
-    let confirmButton = {
-      text: 'OK',
-      handler: data => {
-        this.requests.addEvent(data.name).subscribe(res => {
-          this.events = res.events;
-        })
-      }
-    };
-    prompt.addButton(confirmButton);
-    prompt.present();
+  createEvent(name) {
+    this.requests.addEvent(name).subscribe(res => {
+      console.log(res);
+      this.events = res.events;
+      this.showCreateModal = false;
+    })
   }
 
   editEvent(event) {
