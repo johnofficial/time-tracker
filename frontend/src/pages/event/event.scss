@@ -1,18 +1,73 @@
-page-login {
 
+.fab{
+  height: 60px;
+  width: 60px;
 }
-
+.fab [name = play]{
+  color: #45E683;
+}
+.fab [name = pause]{
+  color: #E64545;
+}
 .img-wrap {
   width: 100%;
   margin: auto;
 }
 
 h1 {
-
   text-align: center;
 
   span {
     opacity: .5;
     font-size: 14px;
   }
+}
+ion-app.ios [padding] .scroll-content{
+  padding: 0;
+}
+.current-time{
+  width: 100%;
+  height: 100px;
+  background-color: #F5F5F5;
+  box-shadow: 0 0 10px rgba(0,0,0,0.16);
+  margin-top: 60px;
+  margin-bottom: 60px;
+
+}
+.current-time h2{
+  font-size: 36px;
+  line-height: 100px;
+  text-align: center;
+  font-weight: 400;
+}
+
+[play]{
+  color: #45E683;
+}
+[pause]{
+  color: #E64545;
+}
+
+ul{
+  width: calc(100% - 36px);
+  margin: auto;
+  padding: 0;
+}
+ul li{
+  width: 100%;
+  background: #F5F5F5;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: wrap;
+  justify-content: space-between;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+ul li strong{
+  color: #95989A;
+  font-size: 14px;
+  line-height: 40px;
+}
+ul li p{
+  font-size: 14px;
 }

@@ -4,10 +4,11 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header class="gradient">
+<ion-header>
 
 
   <ion-navbar color="white">
+
     <div class="logo">
       <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="3720.555 68.5 143.497 25.313">
         <defs>
@@ -26,18 +27,18 @@
       </svg>
 
     </div>
+
   </ion-navbar>
+
   <section class="title-toolbar grad">
     <ion-title>{{eventService.activeEvent.name}}</ion-title>
   </section>
-</ion-header>
-
-    </div>
-    <button ion-button menuToggle><ion-icon color="primary" name="reorder"></ion-icon></button>
-  </ion-navbar>
-
 
 </ion-header>
+
+
+
+
 
 <ion-content padding>
   <ion-fab top center edge>
@@ -45,10 +46,15 @@
     <button (click)="eventSwitch()" *ngIf="eventService.activeEvent.active" class="white" ion-fab><ion-icon name="pause"></ion-icon></button>
   </ion-fab>
 
-  <h1 *ngIf="!eventService.activeEvent.active" style="text-align: center"><span>You spent a </span>{{period}}<span> time on </span>{{eventService.activeEvent.name}}</h1>
-  <div *ngIf="eventService.activeEvent.active" class="img-wrap">
-
-    <img src="https://s-media-cache-ak0.pinimg.com/originals/72/66/03/7266036c9f3383d21730484150602f01.gif" alt="">
-    <h1>{{hours}} : {{minutes}} : {{seconds}}</h1>
+  <div class="current-time">
+    <h2 play >{{period}}</h2>
   </div>
+
+  <ul>
+    <li><strong>Today</strong><p>04:29:31</p></li>
+    <li><strong>Last Week</strong><p>21:51:12</p></li>
+    <li><strong>Last Month</strong><p>82:19:10</p></li>
+    <li><strong>Total</strong><p>132:21:30</p></li>
+  </ul>
+
 </ion-content>
