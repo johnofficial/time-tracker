@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 export class RequestsProvider {
 
   private API_URL = 'http://138.68.76.20:8808/api';
-  // private API_URL = 'http://localhost:8802/api';
+  // private API_URL = 'http://localhost:8808/api';
 
   private get_auth_header() {
     let token = localStorage.getItem('authToken');

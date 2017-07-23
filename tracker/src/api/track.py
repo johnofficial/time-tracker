@@ -11,9 +11,9 @@ import datetime
 import decimal
 import json
 
-def get_period(event):
+def get_total_period(event):
 
-    _total = datetime.timedelta(hours=0, minutes=0, seconds=0)
+    _total = datetime.timedelta(hours=0, minutes=0, seconds=0, days=0   )
     for task in event.tasks:
 
         if not task.period:
@@ -22,12 +22,41 @@ def get_period(event):
 
         _total += task.timedelta()
 
-    return str(_total)
+    return _total
 
 
 def get_all_events_list():
     Event, session = base.common.orm.get_orm_model('events')
     return [event.toJson() for event in session.query(Event).order_by(Event.created.desc()).all()]
+
+def get_monthly_stats(event):
+
+    _total = datetime.timedelta(hours=0, minutes=0, seconds=0)
+
+    for task in event.tasks:
+
+        if not task.period:
+            continue
+
+        if task.start_time > (datetime.datetime.now() - datetime.timedelta(days=30)):
+            _total += task.timedelta()
+
+    return _total
+
+
+def get_weekly_stats(event):
+
+    _total = datetime.timedelta(hours=0, minutes=0, seconds=0)
+
+    for task in event.tasks:
+
+        if not task.period:
+            continue
+
+        if task.start_time > (datetime.datetime.now() - datetime.timedelta(days=7)):
+            _total += task.timedelta()
+
+    return _total
 
 
 @api(
@@ -62,14 +91,21 @@ class Switch(Base):
             for task in event.tasks:
                 if not task.end_time:
                     if stop_task(task):
-                        _period = get_period(event)
-                        return self.ok({"action": "stopped", "event": event.toJson(), "period": _period})
+                        _period = get_total_period(event)
+                        _lm_period = get_monthly_stats(event)
+                        _lw_period = get_weekly_stats(event)
+                        return self.ok({"action": "stopped",
+                                        "event": event.toJson(),
+                                        "period": str(_period),
+                                        'last_month_period': str(_lm_period),
+                                        'last_week_period': str(_lw_period)
+                                        })
                     else:
                         return self.error('error stoping event')
 
         event.active = True
         _id = sequencer().new('t')
-        start_time = datetime.datetime.now()
+        start_time = datetime.datetime  .now()
         end_time = None
         period = None
 
@@ -78,7 +114,9 @@ class Switch(Base):
         try:
             event.tasks.append(task)
             session.commit()
-            return self.ok({'action': 'started', "event": event.toJson()})
+            return self.ok({'action': 'started',
+                            "event": event.toJson()}
+                           )
         except Exception as e:
             session.rollback()
             return self.error('{}'.format(e))
@@ -163,11 +201,15 @@ class EventPeriod(Base):
         if not event:
             return self.error('no event')
 
-        _total = get_period(event)
+        _total = get_total_period(event)
+        _lm_period = get_monthly_stats(event)
+        _lw_period = get_weekly_stats(event)
 
         return self.ok({
             'event': event.name,
-            'period': str(_total)
+            'period': str(_total),
+            'last_month_period': str(_lm_period),
+            'last_week_period': str(_lw_period)
         })
 
 @api(
@@ -180,13 +222,10 @@ class TestingClass(Base):
         # from src.models.user import EventTask
         EventTask, _ = base.common.orm.get_orm_model('event_tasks')
 
-        tasks = _.query(EventTask).all()
+        b = self.get_cookie('test')
+        print(b)
 
-        task = tasks[0]
-
-        if task.period:
-            for task in tasks:
-                print(type(task.timedelta()))
+        return self.ok()
 
 
 

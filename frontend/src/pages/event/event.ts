@@ -21,6 +21,7 @@ export class EventPage {
   seconds: number;
 
   interval:any;
+  event: any;
 
   period: string;
 
@@ -30,6 +31,7 @@ export class EventPage {
     this.requests.getPeriod(this.eventService.activeEvent.id).subscribe(res => {
       console.log(res);
       this.period = res.period;
+      this.event = res.event;
       this.setCount();
     });
 

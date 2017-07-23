@@ -58,7 +58,7 @@ hooks = [
     'pre_register_user',
     # 'post_register_process',
     # 'user_exists',
-    # 'pre_login_process',
+    'pre_login_process',
     # 'post_login_process',
     # 'save_hash',
     # 'get_hash_data',
@@ -83,6 +83,9 @@ def pre_register_user(username, password, data):
     data['last_name'] = str(lname[1:])
 
     return True
+
+def pre_login_process(username, data):
+    print(data)
 
 def format_password(username, password):
     import bcrypt
@@ -112,6 +115,8 @@ def register_user(id_user, username, password, data):
     if role_flags not in user_roles.lmap:
         log.critical('Wrong role type: {}'.format(role_flags))
         return 'Wrong user role type {}'.format(role_flags)
+
+    username = username.strip().lower()
 
     _auth_user = AuthUser(id_user, username, password, role_flags, True)
     _session.add(_auth_user)
